@@ -2,17 +2,9 @@
 var express = require('express');
 var app = express();
 
-app.get("/", function(req, res) {
-    res.sendFile(__dirname + '/views/index.html');
-});
 
 app.use(express.static(__dirname + "/public"));
 
-app.get("/json", (req, res) => {
-    res.json({
-        message: "Hello Json"
-    });
-});
 
 console.log("Hello World");
 // --> 7)  Mount the Logger middleware here
@@ -28,16 +20,31 @@ console.log("Hello World");
 
 
 /** 3) Serve an HTML file */
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + '/views/index.html');
+});
 
 
 /** 4) Serve static assets  */
 
 
 /** 5) serve JSON on a specific route */
+app.get("/json", (req, res) => {
+    res.json({
+        message: response()
+    });
+});
 
 
 /** 6) Use the .env file to configure the app */
- 
+const response = ()=>{
+    let resp = " "
+    if (process.env.MESSAGE_STYLE === 'uppercase'){
+        return resp = "Hello json".toUpperCase();
+    } else {
+        return resp = "Hello json";
+    }
+}
  
 /** 7) Root-level Middleware - A logger */
 //  place it before all the routes !
